@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -19,7 +20,7 @@ db.init_app(app)
 jwt = JWT(app, authenticate, identity)  # create an /auth endpoint
 
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=1800)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 api.add_resource(Student, '/student/<string:name>')
