@@ -8,10 +8,12 @@ from codebase.resources.student import Student
 from codebase.resources.user import UserRegister
 from codebase.db import db
 
+
 app = Flask(__name__)
 app.secret_key = 'any_password'
 
 api = Api(app)
+db.init_app(app)
 
 # security
 jwt = JWT(app, authenticate, identity)  # create an /auth endpoint
@@ -30,5 +32,4 @@ def create_tables():
 
 
 if __name__ == "__main__":
-    db.init_app(app)
     app.run(port=5000, debug=True)
